@@ -43,7 +43,7 @@ install_3proxy() {
 gen_3proxy() {
     cat <<EOF
 daemon
-maxconn 5000
+maxconn 500
 nserver 1.1.1.1
 nserver 1.0.0.1
 nserver 2606:4700:4700::64
@@ -65,23 +65,6 @@ $(awk -F "/" '{print "auth strong\n" \
 EOF
 }
 
-gen_proxy_file_for_user() {
-    cat >proxy.txt <<EOF
-$(awk -F "/" '{print $3 ":" $4 ":" vilas ":" 12345 }' ${WORKDATA})
-EOF
-}
-
-upload_proxy() {
-    cd $WORKDIR
-    local PASS=$(random)
-    zip --password $PASS proxy.zip proxy.txt
-    URL=$(curl -F "file=@proxy.zip" https://file.io)
-
-    echo "Proxy is ready! Format IP:PORT:LOGIN:PASS"
-    echo "Download zip archive from: ${URL}"
-    echo "Password: ${PASS}"
-
-}
 gen_data() {
     seq $FIRST_PORT $LAST_PORT | while read port; do
         echo "vilas/12345/$IP4/$port/$(gen64 $IP6)"
@@ -110,7 +93,7 @@ IP6=$(curl -6 -s icanhazip.com | cut -f1-4 -d':')
 
 echo "Internal ip = ${IP4}. Exteranl sub for ip6 = ${IP6}"
 
-echo "How many proxy do you want to create? Example 500. Max 5000"
+echo "How many proxy do you want to create? Example 500"
 read COUNT
 
 FIRST_PORT=10000
@@ -134,6 +117,3 @@ EOF
 
 bash /etc/rc.local
 
-gen_proxy_file_for_user
-
-upload_proxy
