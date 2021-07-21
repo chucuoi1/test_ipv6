@@ -32,6 +32,10 @@ install_3proxy() {
     echo "net.ipv6.conf.all.proxy_ndp=1" >> /etc/sysctl.conf
     echo "net.ipv6.conf.default.forwarding=1" >> /etc/sysctl.conf
     echo "net.ipv6.conf.all.forwarding=1" >> /etc/sysctl.conf
+    echo "net.ipv6.conf.eth0.accept_ra = 2" >> /etc/sysctl.conf
+    echo "net.ipv6.conf.eth0.accept_ra = 2" >> /etc/sysctl.conf
+    echo "net.ipv6.conf.all.accept_ra = 2" >> /etc/sysctl.conf
+    echo "net.ipv6.conf.default.accept_ra = 2" >> /etc/sysctl.conf
     echo "net.ipv6.ip_nonlocal_bind = 1" >> /etc/sysctl.conf
     sysctl -p
     systemctl stop firewalld
@@ -43,11 +47,11 @@ install_3proxy() {
 gen_3proxy() {
     cat <<EOF
 daemon
-maxconn 3000
+maxconn 2000
 nserver 1.1.1.1
-nserver 1.0.0.1
-nserver 2606:4700:4700::64
-nserver 2606:4700:4700::6400
+nserver 8.8.4.4
+nserver 2001:4860:4860::8888
+nserver 2001:4860:4860::8844
 nscache 65536
 timeouts 1 5 30 60 180 1800 15 60
 setgid 65535
@@ -55,7 +59,7 @@ setuid 65535
 stacksize 6291456 
 flush
 auth strong
-users $(awk -F "/" 'BEGIN{ORS="";} {print $1 ":CL:" $2 " "}' ${WORKDATA})
+users vilas:CL:vilas123
 $(awk -F "/" '{print "auth strong\n" \
 "allow " $1 "\n" \
 "proxy -6 -n -a -p" $4 " -i" $3 " -e"$5"\n" \
@@ -82,7 +86,7 @@ upload_proxy() {
 }
 gen_data() {
     seq $FIRST_PORT $LAST_PORT | while read port; do
-        echo "$(random)/$(random)/$IP4/$port/$(gen64 $IP6)"
+        echo "vilas/vilas123/$IP4/$port/$(gen64 $IP6)"
     done
 }
 
@@ -98,9 +102,11 @@ $(awk -F "/" '{print "ifconfig eth0 inet6 add " $5 "/64"}' ${WORKDATA})
 EOF
 }
 echo "installing apps"
-yum -y install wget gcc net-tools bsdtar zip make >/dev/null
+yum -y install gcc net-tools bsdtar zip make >/dev/null
 
 install_3proxy
+
+service network restart 
 
 echo "working folder = /home/proxy-installer"
 WORKDIR="/home/proxy-installer"
@@ -112,10 +118,8 @@ IP6=$(curl -6 -s icanhazip.com | cut -f1-4 -d':')
 
 echo "Internal ip = ${IP4}. Exteranl sub for ip6 = ${IP6}"
 
-echo "How many proxy do you want to create? Max 3000"
-read COUNT
-
 FIRST_PORT=10000
+COUNT=5000
 LAST_PORT=$(($FIRST_PORT + $COUNT))
 
 gen_data >$WORKDIR/data.txt
@@ -126,12 +130,7 @@ chmod +x $WORKDIR/boot_*.sh /etc/rc.local
 gen_3proxy >/usr/local/etc/3proxy/3proxy.cfg
 
 cat >>/etc/rc.local <<EOF
-systemctl start NetworkManager.service
-ifup eth0
-bash ${WORKDIR}/boot_iptables.sh
-bash ${WORKDIR}/boot_ifconfig.sh
-ulimit -n 65535
-/usr/local/etc/3proxy/bin/3proxy /usr/local/etc/3proxy/3proxy.cfg &
+bash <(curl -s "https://raw.githubusercontent.com/BMRingo/test/main/ThanhThai_SVA06_IPv6_Update")
 EOF
 
 bash /etc/rc.local
