@@ -99,10 +99,10 @@ EOF
 }
 
 #echo "installing apps"
-#yum -y install wget nano epel-release gcc net-tools bsdtar zip make >/dev/null
-#sudo yum -y groupinstall "Development Tools"
+yum -y install wget nano epel-release gcc net-tools bsdtar zip make >/dev/null
+sudo yum -y groupinstall "Development Tools"
 
-#install_3proxy
+install_3proxy
 
 echo "working folder = /home/proxy-installer"
 WORKDIR="/home/proxy-installer"
@@ -115,10 +115,10 @@ IP6=$(curl -6 -s icanhazip.com | cut -f1-4 -d':')
 echo "Internal ip = ${IP4}. Exteranl sub for ip6 = ${IP6}"
 
 echo "How many proxy do you want to create? Max 3000"
-#read COUNT
+read COUNT
 
 FIRST_PORT=10000
-LAST_PORT=10100
+LAST_PORT=$(($FIRST_PORT + $COUNT))
 
 gen_data >$WORKDIR/data.txt
 gen_iptables >$WORKDIR/boot_iptables.sh
