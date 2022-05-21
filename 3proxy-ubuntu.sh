@@ -25,6 +25,7 @@ gen64() {
 
 install_3proxy() {
     echo "installing 3proxy"
+    sudo apt install libarchive-tools make gcc -y
     mkdir -p /3proxy
     cd /3proxy
     URL="https://github.com/z3APA3A/3proxy/archive/0.9.3.tar.gz"
