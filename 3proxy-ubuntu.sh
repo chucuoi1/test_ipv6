@@ -28,7 +28,7 @@ install_3proxy() {
     mkdir -p /3proxy
     cd /3proxy
     URL="https://github.com/z3APA3A/3proxy/archive/0.9.3.tar.gz"
-    wget -q $URL | tar –xvzf 0.9.3.tar.gz
+    wget -q $URL | tar -xvzf 0.9.3.tar.gz
     cd 3proxy-0.9.3
     make -f Makefile.Linux
     mkdir -p /usr/local/etc/3proxy/{bin,logs,stat}
