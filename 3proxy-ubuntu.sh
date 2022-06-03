@@ -25,11 +25,10 @@ gen64() {
 
 install_3proxy() {
     echo "installing 3proxy"
-    sudo apt install libarchive-tools make gcc -y
     mkdir -p /3proxy
     cd /3proxy
     URL="https://github.com/z3APA3A/3proxy/archive/0.9.3.tar.gz"
-    wget -qO- $URL | bsdtar -xvf-
+    wget -qO- $URL | tar –xvzf
     cd 3proxy-0.9.3
     make -f Makefile.Linux
     mkdir -p /usr/local/etc/3proxy/{bin,logs,stat}
@@ -105,6 +104,7 @@ gen_ifconfig() {
 $(awk -F "/" '{print "ifconfig " $6 " inet6 add " $5 "/64"}' ${WORKDATA})
 EOF
 }
+
 echo USER
 read user
 echo PASS
@@ -118,7 +118,7 @@ read ifname
 
 echo "installing apps"
 
-sudo apt install build-essential net-tools curl wget zip bsdtar make ifupdown -y >/dev/null
+sudo apt install build-essential net-tools curl wget zip make ifupdown libarchive-tools make gcc -y >/dev/null
 install_3proxy
 
 echo "working folder = $HOME/proxy-installer"
