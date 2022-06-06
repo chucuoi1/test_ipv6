@@ -80,7 +80,7 @@ EOF
 
 gen_ifconfig() {
     cat <<EOF
-$(awk -F "/" '{print "ifconfig " $ifname " inet6 add " $5 "/64"}' ${WORKDATA})
+$(awk -F "/" '{print "ifconfig " $IFNAME " inet6 add " $5 "/64"}' ${WORKDATA})
 EOF
 }
 
@@ -89,7 +89,7 @@ EOF
 # echo PASS
 # read pass
 echo IFname
-read ifname
+read IFNAME
 
 echo "installing apps"
 
