@@ -93,6 +93,8 @@ ifname=$(read)
 
 echo "installing apps"
 
+sudo apt update
+sudo apt upgrade -y
 sudo apt install build-essential net-tools curl wget git zip make ifupdown libarchive-tools make gcc -y >/dev/null
 install_3proxy
 
