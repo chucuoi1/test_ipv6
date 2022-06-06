@@ -59,7 +59,7 @@ auth strong
 users $user:CL:$pass
 auth strong
 allow $user
-$(awk -F "/" '{print "proxy -6 -n -a -p" $4 " -i" $3 " -e"$5"\n"}' ${WORKDATA})
+$(awk -F "/" '{print "proxy -6 -n -a -p" $4 " -i" $3 " -e"$5""}' ${WORKDATA})
 flush
 EOF
 }
@@ -68,7 +68,7 @@ EOF
 
 gen_data() {
     seq $FIRST_PORT $LAST_PORT | while read port; do
-        echo "$user/$pass/$IP4/$port/$(gen64 $IP6)/$iffname"
+        echo "$user/$pass/$IP4/$port/$(gen64 $IP6)/$ifname"
     done
 }
 
