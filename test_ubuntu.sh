@@ -8,7 +8,7 @@ pass=vilas123
 FIRST_PORT=10000
 LAST_PORT=10250
 
-# ifname=ens3
+ifname=ens3
 ### end define variable
 random() {
         tr </dev/urandom -dc A-Za-z0-9 | head -c5
@@ -88,8 +88,8 @@ EOF
 # read user
 # echo PASS
 # read pass
-echo IFname
-read IFNAME
+# echo IFname
+# read IFNAME
 
 echo "installing apps"
 
@@ -113,11 +113,8 @@ gen_ifconfig >$WORKDIR/boot_ifconfig.sh
 
 gen_3proxy >/usr/local/3proxy/conf/3proxy.cfg
 cat >>$WORKDIR/3proxy.sh <<EOF
-netplan apply
 bash ${WORKDIR}/boot_iptables.sh
 bash ${WORKDIR}/boot_ifconfig.sh
-ulimit -n 65535
-/usr/local/3proxy/conf/3proxy.cfg &
 EOF
 chmod +x $WORKDIR/*.sh
 bash $WORKDIR/3proxy.sh
