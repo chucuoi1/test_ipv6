@@ -59,8 +59,8 @@ auth strong
 users $user:CL:$pass
 auth strong
 allow $user
-"proxy -6 -n -a -p" $4 " -i" $3 " -e"$5"\n" \
-flush}' ${WORKDATA})
+$(awk -F "/" '{print "proxy -6 -n -a -p" $4 " -i" $3 " -e"$5"\n" \}' ${WORKDATA})
+flush
 EOF
 }
 
@@ -117,7 +117,7 @@ netplan apply
 bash ${WORKDIR}/boot_iptables.sh
 bash ${WORKDIR}/boot_ifconfig.sh
 ulimit -n 65535
-/usr/local/3proxy /usr/local/3proxy/conf/3proxy.cfg &
+/usr/local/3proxy/conf/3proxy.cfg &
 EOF
 chmod +x $WORKDIR/*.sh
 bash $WORKDIR/3proxy.sh
