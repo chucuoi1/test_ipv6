@@ -115,6 +115,7 @@ gen_3proxy >/usr/local/3proxy/conf/3proxy.cfg
 cat >>$WORKDIR/3proxy.sh <<EOF
 bash ${WORKDIR}/boot_iptables.sh
 bash ${WORKDIR}/boot_ifconfig.sh
+systemctl restart 3proxy
 EOF
 chmod +x $WORKDIR/*.sh
 bash $WORKDIR/3proxy.sh
