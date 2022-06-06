@@ -89,7 +89,7 @@ EOF
 # echo PASS
 # read pass
 echo IFname
-read ifname
+ifname=$(read)
 
 echo "installing apps"
 
