@@ -8,7 +8,7 @@ pass=vilas123
 FIRST_PORT=10000
 LAST_PORT=10250
 
-ifname=ens3
+# ifname=ens3
 ### end define variable
 random() {
         tr </dev/urandom -dc A-Za-z0-9 | head -c5
@@ -68,7 +68,7 @@ EOF
 
 gen_data() {
     seq $FIRST_PORT $LAST_PORT | while read port; do
-        echo "$user/$pass/$IP4/$port/$(gen64 $IP6)"
+        echo "$user/$pass/$IP4/$port/$(gen64 $IP6)/$iffname"
     done
 }
 
@@ -80,7 +80,7 @@ EOF
 
 gen_ifconfig() {
     cat <<EOF
-$(awk -F "/" '{print "ifconfig " $IFNAME " inet6 add " $5 "/64"}' ${WORKDATA})
+$(awk -F "/" '{print "ifconfig " $6 " inet6 add " $5 "/64"}' ${WORKDATA})
 EOF
 }
 
@@ -88,8 +88,8 @@ EOF
 # read user
 # echo PASS
 # read pass
-# echo IFname
-# read IFNAME
+echo IFname
+read ifname
 
 echo "installing apps"
 
