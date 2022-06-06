@@ -96,7 +96,7 @@ echo "installing apps"
 sudo apt install build-essential net-tools curl wget git zip make ifupdown libarchive-tools make gcc -y >/dev/null
 install_3proxy
 
-echo "working folder = $HOME/proxy-installer"
+echo "working folder = /home/proxy-installer"
 WORKDIR="/home/proxy-installer"
 WORKDATA="${WORKDIR}/data.txt"
 mkdir -p $WORKDIR && cd $_
