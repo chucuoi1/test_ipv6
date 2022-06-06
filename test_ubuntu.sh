@@ -97,7 +97,7 @@ sudo apt install build-essential net-tools curl wget git zip make ifupdown libar
 install_3proxy
 
 echo "working folder = $HOME/proxy-installer"
-WORKDIR="${HOME}/proxy-installer"
+WORKDIR="/home/proxy-installer"
 WORKDATA="${WORKDIR}/data.txt"
 mkdir -p $WORKDIR && cd $_
 
