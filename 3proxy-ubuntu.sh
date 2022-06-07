@@ -3,10 +3,10 @@
 ### define variable
 
 array=(1 2 3 4 5 6 7 8 9 0 a b c d e f)
-# user=user
-# pass=pass
-# FIRST_PORT=10000
-# LAST_PORT=11000
+user=vilas
+pass=vilas123
+FIRST_PORT=10000
+LAST_PORT=10250
 
 ifname=ens3
 ### end define variable
@@ -77,8 +77,8 @@ nserver 2606:4700:4700::64
 nserver 2606:4700:4700::6400
 nscache 65536
 timeouts 1 5 30 60 180 1800 15 60
-setgid 65535
-setuid 65535
+# setgid 65535
+# setuid 65535
 stacksize 6291456
 flush
 auth strong
