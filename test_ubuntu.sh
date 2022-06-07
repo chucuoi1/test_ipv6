@@ -8,7 +8,7 @@ pass=vilas123
 FIRST_PORT=10000
 LAST_PORT=10250
 
-# ifname=ens3
+ifname=ens3
 ### end define variable
 random() {
         tr </dev/urandom -dc A-Za-z0-9 | head -c5
@@ -93,10 +93,10 @@ ifname=$(read)
 
 echo "installing apps"
 
-sudo apt update
-sudo apt upgrade -y
-sudo apt install build-essential net-tools curl wget git zip make ifupdown libarchive-tools make gcc -y >/dev/null
-install_3proxy
+# sudo apt update
+# sudo apt upgrade -y
+# sudo apt install build-essential net-tools curl wget git zip make ifupdown libarchive-tools make gcc -y >/dev/null
+# install_3proxy
 
 echo "working folder = /home/proxy-installer"
 WORKDIR="/home/proxy-installer"
