@@ -8,7 +8,7 @@ array=(1 2 3 4 5 6 7 8 9 0 a b c d e f)
 # FIRST_PORT=10000
 # LAST_PORT=11000
 
-# ifname=ens3
+ifname=ens3
 ### end define variable
 random() {
         tr </dev/urandom -dc A-Za-z0-9 | head -c5
@@ -83,10 +83,10 @@ stacksize 6291456
 flush
 auth strong
 users $user:CL:$pass
-$(awk -F "/" '{print "auth strong\n" \
-"allow " $1 "\n" \
-"proxy -6 -n -a -p" $4 " -i" $3 " -e"$5"\n" \
-"flush\n"}' ${WORKDATA})
+auth strong
+allow $user
+$(awk -F "/" '{print "proxy -6 -n -a -p" $4 " -i" $3 " -e"$5""}' ${WORKDATA})
+flush
 EOF
 }
 
@@ -104,16 +104,7 @@ $(awk -F "/" '{print "ifconfig " $6 " inet6 add " $5 "/64"}' ${WORKDATA})
 EOF
 }
 
-echo USER
-read user
-echo PASS
-read pass
-echo FIRST_PORT
-read FIRST_PORT
-echo LAST_PORT
-read LAST_PORT
-echo IFname
-read ifname
+
 
 echo "installing apps"
 
