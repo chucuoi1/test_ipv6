@@ -88,8 +88,8 @@ EOF
 # read user
 # echo PASS
 # read pass
-echo IFname
-ifname=$(read)
+# echo IFname
+# ifname=$(read)
 
 echo "installing apps"
 
