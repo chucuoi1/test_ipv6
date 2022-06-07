@@ -28,7 +28,8 @@ install_3proxy() {
     mkdir -p /3proxy
     cd /3proxy
     URL="https://github.com/z3APA3A/3proxy/archive/0.9.3.tar.gz"
-    wget -q $URL | tar -xvzf 0.9.3.tar.gz
+    wget -q $URL
+	tar -xvzf 0.9.3.tar.gz
     cd 3proxy-0.9.3
     make -f Makefile.Linux
     mkdir -p /usr/local/etc/3proxy/{bin,logs,stat}
@@ -111,8 +112,8 @@ echo "installing apps"
 sudo apt install build-essential net-tools curl wget zip make ifupdown libarchive-tools make gcc -y >/dev/null
 install_3proxy
 
-echo "working folder = $HOME/proxy-installer"
-WORKDIR="${HOME}/proxy-installer"
+echo "working folder = /home/proxy-installer"
+WORKDIR="/home/proxy-installer"
 WORKDATA="${WORKDIR}/data.txt"
 mkdir -p $WORKDIR && cd $_
 
