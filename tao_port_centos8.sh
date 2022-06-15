@@ -11,6 +11,7 @@ gen64() {
 	}
 	echo "$1:$(ip64):$(ip64):$(ip64):$(ip64)"
 }
+
 install_3proxy() {
     echo "installing 3proxy"
     mkdir -p /3proxy
@@ -56,7 +57,7 @@ stacksize 6291456
 flush
 auth strong
 
-users $(awk -F "/" 'BEGIN{ORS="";} {print vilas ":CL:" 12345 " "}' ${WORKDATA})
+users vilas:CL:12345
 
 $(awk -F "/" '{print "auth strong\n" \
 "allow " vilas "\n" \
