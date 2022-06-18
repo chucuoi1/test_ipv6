@@ -9,8 +9,9 @@ gen64() {
 	ip64() {
 		echo "${array[$RANDOM % 16]}${array[$RANDOM % 16]}${array[$RANDOM % 16]}${array[$RANDOM % 16]}"
 	}
-	echo "vilas:$(ip64):$(ip64):$(ip64):$(ip64)"
+	echo "$1:$(ip64):$(ip64):$(ip64):$(ip64)"
 }
+
 install_3proxy() {
     echo "installing 3proxy"
     mkdir -p /3proxy
@@ -28,7 +29,7 @@ install_3proxy() {
 #    systemctl enable 3proxy
     echo "* hard nofile 999999" >>  /etc/security/limits.conf
     echo "* soft nofile 999999" >>  /etc/security/limits.conf
-    echo "net.ipv6.conf.eth1.proxy_ndp=1" >> /etc/sysctl.conf
+    echo "net.ipv6.conf.eth2.proxy_ndp=1" >> /etc/sysctl.conf
     echo "net.ipv6.conf.all.proxy_ndp=1" >> /etc/sysctl.conf
     echo "net.ipv6.conf.default.forwarding=1" >> /etc/sysctl.conf
     echo "net.ipv6.conf.all.forwarding=1" >> /etc/sysctl.conf
@@ -56,7 +57,7 @@ stacksize 6291456
 flush
 auth strong
 
-users $(awk -F "/" 'BEGIN{ORS="";} {print vilas ":CL:" 12345 " "}' ${WORKDATA})
+users vilas:CL:12345
 
 $(awk -F "/" '{print "auth strong\n" \
 "allow " vilas "\n" \
@@ -79,9 +80,14 @@ EOF
 
 gen_ifconfig() {
     cat <<EOF
-$(awk -F "/" '{print "ifconfig eth1 inet6 add " $5 "/64"}' ${WORKDATA})
+$(awk -F "/" '{print "ifconfig eth2 inet6 add " $5 "/64"}' ${WORKDATA})
 EOF
 }
+
+echo "installing apps"
+yum -y install gcc net-tools bsdtar zip make >/dev/null
+
+install_3proxy
 
 echo "working folder = /home/proxy-installer"
 WORKDIR="/home/proxy-installer"
@@ -108,7 +114,7 @@ gen_3proxy >/usr/local/etc/3proxy/3proxy.cfg
 
 cat >>/etc/rc.local <<EOF
 systemctl start NetworkManager.service
-ifup eth1
+ifup eth2
 bash ${WORKDIR}/boot_iptables.sh
 bash ${WORKDIR}/boot_ifconfig.sh
 ulimit -n 65535
