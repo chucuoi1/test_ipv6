@@ -32,7 +32,7 @@ pre-up modprobe ipv6
 address 2604:7c00:16:184::1/64
 gateway 2604:7c00:16::1
 EOF
-	
+	systemctl restart networking
 }
 
 install_3proxy() {
@@ -89,7 +89,7 @@ gen_data() {
 
 gen_iptables() {
     cat <<EOF
-    $(awk -F "/" '{print "iptables -I INPUT -p tcp --dport " $4 "  -m state --state NEW -j ACCEPT"}' ${WORKDATA}) 
+$(awk -F "/" '{print "iptables -I INPUT -p tcp --dport " $4 "  -m state --state NEW -j ACCEPT"}' ${WORKDATA}) 
 EOF
 }
 
@@ -144,4 +144,4 @@ bash ${WORKDIR}/boot_ifconfig.sh
 bash $WORKDIR/ping.sh
 EOF
 chmod +x $WORKDIR/*.sh
-bash $WORKDIR/3proxy.sh
+bash /etc/rc.local
