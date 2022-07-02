@@ -112,7 +112,6 @@ EOF
 # echo GATEWAY
 # GATEWAY=$(read)
 
-enable_ipv6
 
 echo "installing apps"
 
