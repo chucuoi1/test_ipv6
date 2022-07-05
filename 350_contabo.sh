@@ -90,6 +90,7 @@ yum -y install gcc net-tools bsdtar zip make >/dev/null
 
 #install_3proxy
 rm -rf /home/proxy-installer
+systemctl restart network
 
 echo "working folder = /home/proxy-installer"
 WORKDIR="/home/proxy-installer"
