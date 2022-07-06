@@ -45,7 +45,7 @@ enable_ipv6() {
                 -   to: $GW::1
                     scope: link
 EOF
-	systemctl restart networking
+	sudo netplan apply
 }
 
 install_3proxy() {
