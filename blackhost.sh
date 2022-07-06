@@ -27,12 +27,12 @@ enable_ipv6() {
 	echo "net.ipv6.conf.default.disable_ipv6=0" >> /etc/sysctl.conf
 	echo "net.ipv6.conf.all.disable_ipv6=0" >> /etc/sysctl.conf
 	echo ADD
-	ADD=$(read)
+	read ADD
 	cat >>/etc/network/interfaces <<EOF
 iface ens3 inet6 static
 pre-up modprobe ipv6
-address ${ADD}::2/64
-gateway ${ADD}::1
+address $ADD::2/64
+gateway $ADD::1
 EOF
 	systemctl restart networking
 }
@@ -125,6 +125,7 @@ echo "installing apps"
 sudo apt install build-essential net-tools curl wget git zip ifupdown libarchive-tools make gcc -y >/dev/null
 # install_3proxy
 rm -rf /home/proxy-installer
+rm -rf /etc/network/interfaces
 systemctl restart network
 
 
