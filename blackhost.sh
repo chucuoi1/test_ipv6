@@ -31,8 +31,8 @@ enable_ipv6() {
 	cat >>/etc/network/interfaces <<EOF
 iface ens3 inet6 static
 pre-up modprobe ipv6
-address $ADD::2/64
-gateway $ADD::1
+address ${ADD}::2/64
+gateway ${ADD}::1
 EOF
 	systemctl restart networking
 }
@@ -154,6 +154,6 @@ EOF
 chmod +x $WORKDIR/*.sh
 bash /etc/rc.local
 cd $WORKDIR
-wget https://github.com/chucuoi1/test_ipv6/blob/2152a59b17db6a53f3dffc30131bd923d43418e9/check.sh
+wget https://github.com/chucuoi1/test_ipv6/raw/main/check.sh
 bash check.sh
 
