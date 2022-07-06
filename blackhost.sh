@@ -26,11 +26,18 @@ gen64() {
 enable_ipv6() {
 	echo "net.ipv6.conf.default.disable_ipv6=0" >> /etc/sysctl.conf
 	echo "net.ipv6.conf.all.disable_ipv6=0" >> /etc/sysctl.conf
+	rm -rf /etc/netplan/01-netcfg.yaml
 	echo ADD
 	read ADD
 	echo GW
 	read GW
-	cat >>/etc/netplan/01-netcfg.yaml <<EOF
+	nano >>/etc/netplan/01-netcfg.yaml <<EOF
+network:
+    version: 2
+    renderer: networkd
+    ethernets:
+        ens3:
+            dhcp4: yes
             dhcp6: no
             addresses:
                 - $ADD::2/64
@@ -46,6 +53,7 @@ enable_ipv6() {
                     scope: link
 EOF
 	sudo netplan apply
+	ping6 -c 10 google.com
 }
 
 install_3proxy() {
