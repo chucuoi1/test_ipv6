@@ -4,9 +4,9 @@
 
 array=(1 2 3 4 5 6 7 8 9 0 a b c d e f)
 user=vilas
-pass=vilas123
+pass=Vilas123
 FIRST_PORT=10000
-LAST_PORT=10250
+LAST_PORT=10350
 ifname=ens3
 
 ### end define variable
