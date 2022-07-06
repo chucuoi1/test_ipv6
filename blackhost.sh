@@ -31,7 +31,7 @@ enable_ipv6() {
 	read ADD
 	echo GW
 	read GW
-	nano >>/etc/netplan/01-netcfg.yaml <<EOF
+	cat >/etc/netplan/01-netcfg.yaml <<EOF
 network:
     version: 2
     renderer: networkd
