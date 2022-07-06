@@ -26,12 +26,12 @@ gen64() {
 enable_ipv6() {
 	echo "net.ipv6.conf.default.disable_ipv6=0" >> /etc/sysctl.conf
 	echo "net.ipv6.conf.all.disable_ipv6=0" >> /etc/sysctl.conf
-	rm -rf /etc/netplan/01-netcfg.yaml
+	# rm -rf /etc/netplan/01-netcfg.yaml
 	echo ADD
 	read ADD
 	echo GW
 	read GW
-	cat >/etc/netplan/01-netcfg.yaml <<EOF
+	cat > /etc/netplan/01-netcfg.yaml <<EOF
 network:
     version: 2
     renderer: networkd
