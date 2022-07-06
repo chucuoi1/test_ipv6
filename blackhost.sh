@@ -26,11 +26,13 @@ gen64() {
 enable_ipv6() {
 	echo "net.ipv6.conf.default.disable_ipv6=0" >> /etc/sysctl.conf
 	echo "net.ipv6.conf.all.disable_ipv6=0" >> /etc/sysctl.conf
+	echo ADD
+	ADD=$(read)
 	cat >>/etc/network/interfaces <<EOF
 iface ens3 inet6 static
 pre-up modprobe ipv6
 address $ADD::2/64
-gateway $GW::1
+gateway $ADD::1
 EOF
 	systemctl restart networking
 }
@@ -101,9 +103,11 @@ EOF
 
 gen_ping () {
 	cat <<EOF
-$(awk -F "/" '{print "ping6 -c 50 -I " $5 " ipv6.google.com"}' ${WORKDATA})
+$(awk -F "/" '{print " $5 "}' ${WORKDATA})
 EOF
 }
+
+
 
 # echo IFname
 # ifname=$(read)
@@ -112,10 +116,6 @@ EOF
 # echo GATEWAY
 # GATEWAY=$(read)
 
-echo ADD
-ADD=$(read)
-echo GW
-GW=$(read)
 enable_ipv6
 
 echo "installing apps"
@@ -123,7 +123,10 @@ echo "installing apps"
 # sudo apt update
 # sudo apt upgrade -y
 sudo apt install build-essential net-tools curl wget git zip ifupdown libarchive-tools make gcc -y >/dev/null
-install_3proxy
+# install_3proxy
+rm -rf /home/proxy-installer
+systemctl restart network
+
 
 echo "working folder = /home/proxy-installer"
 WORKDIR="/home/proxy-installer"
@@ -139,13 +142,18 @@ echo $IP6
 gen_data >$WORKDIR/data.txt
 gen_iptables >$WORKDIR/boot_iptables.sh
 gen_ifconfig >$WORKDIR/boot_ifconfig.sh
-gen_ping >$WORKDIR/ping.sh
+#gen_ping >$WORKDIR/ping.sh
+gen_ping >$WORKDIR/ips.txt
 gen_3proxy >/usr/local/3proxy/conf/3proxy.cfg
 
 cat >>/etc/rc.local <<EOF
 bash ${WORKDIR}/boot_iptables.sh
 bash ${WORKDIR}/boot_ifconfig.sh
-bash $WORKDIR/ping.sh
+#bash $WORKDIR/ping.sh
 EOF
 chmod +x $WORKDIR/*.sh
 bash /etc/rc.local
+cd $WORKDIR
+wget https://github.com/chucuoi1/test_ipv6/blob/2152a59b17db6a53f3dffc30131bd923d43418e9/check.sh
+bash check.sh
+
