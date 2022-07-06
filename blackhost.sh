@@ -122,7 +122,7 @@ EOF
 
 gen_ping () {
 	cat <<EOF
-$(awk -F "/" '{print " $5 "}' ${WORKDATA})
+$(awk -F "/" '{print "" $5 ""}' ${WORKDATA})
 EOF
 }
 
