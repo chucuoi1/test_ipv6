@@ -125,8 +125,7 @@ echo "installing apps"
 sudo apt install build-essential net-tools curl wget git zip ifupdown libarchive-tools make gcc -y >/dev/null
 # install_3proxy
 rm -rf /home/proxy-installer
-rm -rf /etc/network/interfaces
-systemctl restart network
+systemctl restart networking
 
 
 echo "working folder = /home/proxy-installer"
