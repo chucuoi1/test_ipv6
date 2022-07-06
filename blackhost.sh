@@ -29,8 +29,8 @@ enable_ipv6() {
 	cat >>/etc/network/interfaces <<EOF
 iface ens3 inet6 static
 pre-up modprobe ipv6
-address 2604:7c00:16:184::1/64
-gateway 2604:7c00:16::1
+address $ADD::2/64
+gateway $GW::1
 EOF
 	systemctl restart networking
 }
@@ -112,7 +112,11 @@ EOF
 # echo GATEWAY
 # GATEWAY=$(read)
 
-#enable_ipv6
+echo ADD
+ADD=$(read)
+echo GW
+GW=$(read)
+enable_ipv6
 
 echo "installing apps"
 

@@ -29,7 +29,7 @@ enable_ipv6() {
 	cat >>/etc/network/interfaces <<EOF
 iface ens3 inet6 static
 pre-up modprobe ipv6
-address 2604:7c00:16:184::1/64
+address 2604:7c00:16:184::2/64
 gateway 2604:7c00:16::1
 EOF
 	systemctl restart networking
