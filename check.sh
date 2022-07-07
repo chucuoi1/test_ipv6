@@ -25,7 +25,7 @@ do
 		if cat $ip_log | grep -q 'ttl='; then
 			status=1
 		fi
-		if tail -n1 $ip_log | grep -q '50 packets'; then
+		if tail -n1 $ip_log | grep -q '100 packets'; then
 			status=3
 		fi
 		if [ $count -gt 100 ]; then
