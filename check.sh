@@ -10,7 +10,7 @@ function killCmd() {
 while read ip;
 do
 	ip_log="/tmp/check-${ip}.txt"
-	nohup ping6 -c $C -I $ip > $ip_log 2>&1 &
+	nohup ping6 -c $C -I $ip google.com > $ip_log 2>&1 &
 	serverPID=$!
 
 	echo "Checking IP: $ip "
