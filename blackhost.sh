@@ -99,10 +99,7 @@ echo "installing apps"
 # sudo apt update
 # sudo apt upgrade -y
 sudo apt install build-essential net-tools curl wget git zip ifupdown libarchive-tools make gcc -y >/dev/null
-# install_3proxy
-rm -rf /home/proxy-installer
-systemctl restart networking
-
+install_3proxy
 
 echo "working folder = /home/proxy-installer"
 WORKDIR="/home/proxy-installer"
@@ -121,15 +118,14 @@ gen_ifconfig >$WORKDIR/boot_ifconfig.sh
 #gen_ping >$WORKDIR/ping.sh
 gen_ping >$WORKDIR/ips.txt
 gen_3proxy >/usr/local/3proxy/conf/3proxy.cfg
+wget -P $WORKDIR https://github.com/chucuoi1/test_ipv6/raw/main/check.sh
 
 cat >>/etc/rc.local <<EOF
 bash ${WORKDIR}/boot_iptables.sh
 bash ${WORKDIR}/boot_ifconfig.sh
-#bash $WORKDIR/ping.sh
+bash ${WORKDIR}/check.sh
 EOF
 chmod +x $WORKDIR/*.sh
 bash /etc/rc.local
-cd $WORKDIR
-wget https://github.com/chucuoi1/test_ipv6/raw/main/check.sh
-bash check.sh
+
 
