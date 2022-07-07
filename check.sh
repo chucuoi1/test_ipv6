@@ -1,7 +1,7 @@
 #!/bin/sh
 
-C=50
-input="ips.txt"
+C=100
+input="/home/proxy-installer/ips.txt"
 
 function killCmd() {
     kill $1
