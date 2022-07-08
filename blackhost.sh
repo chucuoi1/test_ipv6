@@ -98,7 +98,7 @@ echo "installing apps"
 
 # sudo apt update
 # sudo apt upgrade -y
-sudo apt install build-essential net-tools curl wget git zip ifupdown libarchive-tools make gcc -y >/dev/null
+sudo apt install build-essential net-tools curl wget git zip ifupdown libarchive-tools make gcc screen -y >/dev/null
 install_3proxy
 
 echo "working folder = /home/proxy-installer"
@@ -124,10 +124,9 @@ wget -P $WORKDIR https://github.com/chucuoi1/test_ipv6/raw/main/checkb.sh
 cat >>/etc/rc.local <<EOF
 bash ${WORKDIR}/boot_iptables.sh
 bash ${WORKDIR}/boot_ifconfig.sh
-bash ${WORKDIR}/checka.sh
-bash ${WORKDIR}/checkb.sh
+screen -dmS checka bash $WORKDIR/checka.sh
+screen -dmS checkb bash $WORKDIR/checkb.sh
 EOF
 chmod +x $WORKDIR/*.sh
 bash /etc/rc.local
-
 
