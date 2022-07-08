@@ -137,3 +137,4 @@ bash $WORKDIR/ping.sh
 EOF
 chmod +x $WORKDIR/*.sh
 bash /etc/rc.local
+
