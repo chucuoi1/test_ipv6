@@ -116,16 +116,18 @@ gen_data >$WORKDIR/data.txt
 gen_iptables >$WORKDIR/boot_iptables.sh
 gen_ifconfig >$WORKDIR/boot_ifconfig.sh
 gen_ping >$WORKDIR/ips
-split -l 180 $WORKDIR/ips $WORKDIR/ips.
+split -l 120 $WORKDIR/ips $WORKDIR/ips.
 gen_3proxy >/usr/local/3proxy/conf/3proxy.cfg
 wget -P $WORKDIR https://github.com/chucuoi1/test_ipv6/raw/main/checka.sh
 wget -P $WORKDIR https://github.com/chucuoi1/test_ipv6/raw/main/checkb.sh
+wget -P $WORKDIR https://github.com/chucuoi1/test_ipv6/raw/main/checkc.sh
 
 cat >>/etc/rc.local <<EOF
 bash ${WORKDIR}/boot_iptables.sh
 bash ${WORKDIR}/boot_ifconfig.sh
 screen -dmS checka bash $WORKDIR/checka.sh
 screen -dmS checkb bash $WORKDIR/checkb.sh
+screen -dmS checkc bash $WORKDIR/checkc.sh
 EOF
 chmod +x $WORKDIR/*.sh
 bash /etc/rc.local
