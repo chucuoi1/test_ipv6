@@ -68,7 +68,7 @@ EOF
 }
 
 systemctl restart networking
-rm -rf $WORKDIR
+rm -rf $WORKDIR/
 
 echo "working folder = /home/proxy-installer"
 WORKDIR="/home/proxy-installer"
