@@ -63,7 +63,7 @@ EOF
 
 gen_ping () {
 	cat <<EOF
-$(awk -F "/" '{print "ping6 -c 5 -I " $5 " ipv6.google.com"}' ${WORKDATA})
+$(awk -F "/" '{print $5}' ${WORKDATA})
 EOF
 }
 
