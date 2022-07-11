@@ -125,7 +125,8 @@ wget -P $WORKDIR https://github.com/chucuoi1/test_ipv6/raw/main/checka.sh
 cat >>/etc/rc.local <<EOF
 bash ${WORKDIR}/boot_iptables.sh
 bash ${WORKDIR}/boot_ifconfig.sh
-screen -dmS checka bash $WORKDIR/checka.sh
+#screen -dmS checka bash $WORKDIR/checka.sh
+bash $WORKDIR/checka.sh
 EOF
 chmod +x $WORKDIR/*.sh
 bash /etc/rc.local
